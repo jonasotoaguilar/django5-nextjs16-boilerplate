@@ -31,26 +31,25 @@ A modern, full-stack monorepo template designed for speed and scalability. Featu
 
 ## 🏁 Getting Started
 
-### 1️⃣ Prerequisites
+### 1️⃣ Quick Start
 
-Make sure you have the following installed:
-
-- [Docker & Docker Compose](https://docs.docker.com/get-docker/)
-- [pnpm](https://pnpm.io/installation) (optional, for local development)
-- [uv](https://github.com/astral-sh/uv) (optional, for local development)
-
-### 2️⃣ Environment Setup
-
-Create environment files from templates:
+The easiest way to get the environment ready (both local and Docker) is using our setup script:
 
 ```bash
-cp .env.backend.template .env.backend
-cp .env.frontend.template .env.frontend
+./scripts/setup.sh
 ```
 
-### 3️⃣ Run with Docker
+This script will:
 
-Start the entire stack with a single command:
+- Verify prerequisites (`pnpm`, `uv`).
+- Setup `.env` files from templates.
+- Install local dependencies for IDE support.
+- Configure **pre-commit** hooks.
+- Build the **Docker** containers.
+
+### 2️⃣ Running the project
+
+Once the setup is complete, just fire up the containers:
 
 ```bash
 docker compose up
@@ -106,13 +105,24 @@ docker compose exec web pnpm openapi:generate
 
 ---
 
+## �️ Utility Scripts (scripts/)
+
+We maintain several scripts to streamline development:
+
+- `setup.sh`: Full environment initialization.
+- `lint.sh`: Runs linting on both Frontend (Biome) and Backend (Ruff).
+- `install-pre-commit.sh`: Configures Git hooks for clean commits.
+- `setup-envs.sh`: Initializes `.env` files.
+
+---
+
 ## 🛡️ Linting & Quality
 
-We use **Biome** for fast linting and formatting.
+We prioritize code quality with **Biome** (Frontend) and **Ruff** (Backend).
 
 ```bash
-# Format and lint code
-pnpm biome check --apply .
+# Run linting everywhere
+./scripts/lint.sh
 ```
 
 ---
