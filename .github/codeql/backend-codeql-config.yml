@@ -1,0 +1,18 @@
+name: "Backend CodeQL Configuration"
+
+disable-default-queries: false
+
+queries:
+  - name: Security and Quality
+    uses: security-and-quality
+
+paths:
+  - "backend"
+
+paths-ignore:
+  - "**/node_modules"
+  - "**/test"
+  - "**/tests"
+  - "**/dist"
+  - "**/build"
+  - "**/vendor"
