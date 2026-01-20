@@ -19,6 +19,7 @@
     "tailwindcss": "^4.0.0"
   },
   "scripts": {
-    "openapi:generate": "openapi -i http://api:8000/api/schema -o packages/types/api --name ApiClient"
+    "openapi:generate": "openapi -i http://api:8000/api/schema -o packages/types/api --name ApiClient",
+    "validate": "pnpm biome check --write . && pnpm --filter web build"
   }
 }
