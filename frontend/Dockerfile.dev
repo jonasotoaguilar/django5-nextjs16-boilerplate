@@ -6,4 +6,6 @@ RUN npm install -g pnpm
 
 WORKDIR /app
 
+USER node
+
 EXPOSE 3000
