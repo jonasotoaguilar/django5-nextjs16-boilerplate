@@ -7,6 +7,7 @@ A modern, full-stack monorepo template designed for speed and scalability. Featu
 ![Django](https://img.shields.io/badge/django-5.1-green)
 ![Next.js](https://img.shields.io/badge/next.js-16-black)
 ![React](https://img.shields.io/badge/react-19-blue)
+![Tailwind CSS](https://img.shields.io/badge/tailwindcss-4.0-38bdf8)
 
 ---
 
@@ -18,6 +19,7 @@ A modern, full-stack monorepo template designed for speed and scalability. Featu
 - **API**: Django REST Framework + SimpleJWT
 - **Package Manager**: [uv](https://github.com/astral-sh/uv)
 - **Documentation**: OpenAPI (Swagger/Redoc) via `drf-spectacular`
+- **Admin Panel**: [Django Unfold](https://github.com/unfoldadmin/django-unfold)
 - **Database**: PostgreSQL
 - **Testing**: Pytest
 
@@ -25,9 +27,9 @@ A modern, full-stack monorepo template designed for speed and scalability. Featu
 
 - **Framework**: Next.js 16 (App Router)
 - **Library**: React 19
-- **Styling**: Tailwind CSS 3.4
+- **Styling**: Tailwind CSS 4.0
 - **Package Manager**: [pnpm](https://pnpm.io/)
-- **Validation**: Zod + React Hook Form
+- **Validation**: Zod 4 + React Hook Form
 - **Auth**: NextAuth.js
 
 ### 🔹 Infrastructure
