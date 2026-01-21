@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM python:3.13-slim-bookworm AS build
+FROM python:3.14-slim-bookworm AS build
 
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -16,7 +16,7 @@ COPY . .
 RUN uv sync --frozen --no-dev
 
 # Development stage
-FROM python:3.13-slim-bookworm AS dev
+FROM python:3.14-slim-bookworm AS dev
 
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1

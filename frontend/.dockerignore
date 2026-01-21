@@ -8,8 +8,6 @@ npm-debug.log
 *.log
 README.md
 .next
-!.next/static
-!.next/standalone
 .git
 .gitignore
 .env*
@@ -19,5 +17,8 @@ coverage
 .turbo
 .terraform
 .vscode
+.idea
+.DS_Store
 out
 build
+*.local
