@@ -1,0 +1,24 @@
+{
+  "recommendations": [
+    // Core
+    "biomejs.biome",
+    "charliermarsh.ruff",
+    "ms-python.python",
+    "ms-python.debugpy",
+    "ms-python.vscode-pylance",
+    "batisteo.vscode-django",
+    "bradlc.vscode-tailwindcss",
+
+    // Tools & Config
+    "tamasfe.even-better-toml",
+    "redhat.vscode-yaml",
+    "editorconfig.editorconfig",
+    "ms-azuretools.vscode-docker",
+
+    // Quality of Life
+    "eamodio.gitlens",
+    "usernamehw.errorlens",
+    "naumovs.color-highlight",
+    "christian-kohler.path-intellisense"
+  ]
+}

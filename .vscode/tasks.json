@@ -4,14 +4,16 @@
     {
       "label": "Update OpenAPI schema",
       "type": "shell",
-      "command": "docker compose exec web pnpm openapi:generate",
-      "isBackground": true
+      "command": "docker compose -f docker-compose-dev.yml exec ui-dev pnpm openapi:generate",
+      "isBackground": true,
+      "problemMatcher": []
     },
     {
       "label": "Create superuser",
       "type": "shell",
-      "command": "docker compose exec api uv run -- python manage.py createsuperuser",
-      "isBackground": false
+      "command": "docker compose -f docker-compose-dev.yml exec api-dev uv run -- python manage.py createsuperuser",
+      "isBackground": false,
+      "problemMatcher": []
     }
   ]
 }
