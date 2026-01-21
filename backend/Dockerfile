@@ -7,7 +7,7 @@ ENV UV_PROJECT_ENVIRONMENT=/.venv
 
 WORKDIR /app
 
-RUN pip install uv
+RUN pip install --no-cache-dir uv==0.5.21
 
 COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen --no-dev --no-install-project
@@ -24,7 +24,7 @@ ENV UV_PROJECT_ENVIRONMENT=/.venv
 
 WORKDIR /app
 
-RUN pip install uv
+RUN pip install --no-cache-dir uv==0.5.21
 
 # Create non-root user with home directory
 RUN addgroup --system django && \
