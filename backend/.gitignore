@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django
+*.sqlite3
+*.db
+local_db.sqlite3
+db.sqlite3
+media/
+staticfiles/
+
+# Environment settings
+.env
+.env.*
+!.env.template
+!.env.example
+
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Testing & Code Quality
+.coverage
+htmlcov/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+coverage.xml
+
+# Distribution
+dist/
+build/
+*.egg-info/
