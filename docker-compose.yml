@@ -23,7 +23,15 @@ services:
       postgres:
         condition: service_healthy
     command: ["prod"]
+    networks:
+      - app-network
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
   ui:
     hostname: "ui"
@@ -39,6 +47,8 @@ services:
       - "${UI_PORT:-3000}:3000"
     depends_on:
       - api
+    networks:
+      - app-network
     restart: unless-stopped
 
   postgres:
@@ -47,21 +57,22 @@ services:
     volumes:
       - ./_data/postgres:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=${POSTGRES_ADMIN_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_ADMIN_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${DATABASE_USER:-postgres}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD:-change-password}
+      - POSTGRES_DB=${DATABASE_NAME:-db}
     env_file:
       - path: .env
         required: false
-    ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+    # Do not expose postgres to host in production
+    networks:
+      - app-network
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "sh -c 'pg_isready -U ${POSTGRES_ADMIN_USER} -d ${POSTGRES_DB}'",
-        ]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 5s
       timeout: 5s
       retries: 5
     restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge

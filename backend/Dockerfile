@@ -56,8 +56,12 @@ FROM python:3.13-slim-bookworm AS prod
 
 WORKDIR /app
 
-# Create non-root user with home directory
-RUN addgroup --system django && \
+# Install curl for healthcheck and create non-root user
+# hadolint ignore=DL3008
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    && rm -rf /var/lib/apt/lists/* \
+    && addgroup --system django && \
     adduser --system --ingroup django --home /home/django django
 
 COPY --from=build /.venv /.venv
