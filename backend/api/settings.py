@@ -1,20 +1,28 @@
-from os import environ
 from pathlib import Path
 
+import environ
 from django.core.management.utils import get_random_secret_key
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+
+# Initialize environ
+env = environ.Env(
+    DEBUG=(bool, False),
+)
 
 ######################################################################
 # General
 ######################################################################
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = environ.get("SECRET_KEY", get_random_secret_key())
+# Read .env file if it exists
+environ.Env.read_env(BASE_DIR / ".env")
 
-DEBUG = environ.get("DEBUG", "") == "1"
+SECRET_KEY = env("SECRET_KEY", default=get_random_secret_key())
 
-ALLOWED_HOSTS = ["localhost", "api"]
+DEBUG = env("DEBUG")
+
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "api"])
 
 WSGI_APPLICATION = "api.wsgi.application"
 
@@ -37,12 +45,14 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "drf_spectacular",
     "api",
+    "corsheaders",
 ]
 
 ######################################################################
 # Middleware
 ######################################################################
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -75,18 +85,12 @@ TEMPLATES = [
 # Database
 ######################################################################
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "USER": environ.get("DATABASE_USER", "postgres"),
-        "PASSWORD": environ.get("DATABASE_PASSWORD", "change-password"),
-        "NAME": environ.get("DATABASE_NAME", "db"),
-        "HOST": environ.get("DATABASE_HOST", "db"),
-        "PORT": "5432",
-        "TEST": {
-            "NAME": "test",
-        },
-    }
+    "default": env.db(
+        "DATABASE_URL",
+        default=f"postgres://{env('DATABASE_USER', default='postgres')}:{env('DATABASE_PASSWORD', default='change-password')}@{env('DATABASE_HOST', default='db')}:5432/{env('DATABASE_NAME', default='db')}",
+    )
 }
+DATABASES["default"]["TEST"] = {"NAME": "test"}
 
 ######################################################################
 # Authentication
@@ -167,5 +171,44 @@ UNFOLD = {
                 ],
             },
         ],
+    },
+}
+
+######################################################################
+# CORS
+######################################################################
+CORS_ALLOWED_ORIGINS = env.list(
+    "CORS_ALLOWED_ORIGINS", default=["http://localhost:3000"]
+)
+CORS_ALLOW_CREDENTIALS = True
+
+######################################################################
+# Logging
+######################################################################
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": env("DJANGO_LOG_LEVEL", default="INFO"),
+            "propagate": False,
+        },
     },
 }

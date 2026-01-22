@@ -5,11 +5,13 @@ from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from .api import UserViewSet
+from .views import health_check
 
 router = routers.DefaultRouter()
 router.register("users", UserViewSet, basename="api-users")
 
 urlpatterns = [
+    path("health/", health_check, name="health_check"),
     path(
         "api/schema/swagger-ui/",
         SpectacularSwaggerView.as_view(url_name="schema"),
