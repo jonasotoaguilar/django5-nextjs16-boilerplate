@@ -1,4 +1,5 @@
 import { AuthProvider } from '@/providers/auth-provider'
+import { QueryProvider } from '@/providers/query-provider'
 import type { Metadata } from 'next'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
@@ -33,11 +34,13 @@ export default async function RootLayout({
       >
         <NextIntlClientProvider messages={messages}>
           <AuthProvider>
-            <div className="px-6">
-              <div className="container mx-auto my-12 max-w-6xl">
-                {children}
+            <QueryProvider>
+              <div className="px-6">
+                <div className="container mx-auto my-12 max-w-6xl">
+                  {children}
+                </div>
               </div>
-            </div>
+            </QueryProvider>
           </AuthProvider>
         </NextIntlClientProvider>
       </body>
